@@ -5,7 +5,7 @@
 .login_form {
     display: flex;
     flex-direction: column;
-    width: 40%;
+    width: 30%;
     margin: auto;
     justify-content: center;
 }

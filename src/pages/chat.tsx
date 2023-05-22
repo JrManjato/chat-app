@@ -1,16 +1,23 @@
-import React, {useEffect} from 'react';
-import {useRouter} from "next/router";
+import React from 'react';
+import withAuth from "@/pages/component/WithAuth";
+import {getCookie, removeCookie} from "@/utils/cookie-management";
 
 function ChatHomePage() {
-    const router = useRouter();
-
-    useEffect(() => {
-       !localStorage.getItem('userInfo') && router.push("/login");
-    }, [])
-
+    const clearStorage = () => {
+       removeCookie('userInfo');
+    }
     return (
-         <>HomePage for the chat</>
+        <>HomePage for the chat
+            <button
+                type='button'
+                onClick={() => {
+                    clearStorage();
+                }}
+            >Clear
+            </button>
+            {getCookie('userInfo')}
+        </>
     );
 }
 
-export default ChatHomePage;
+export default withAuth(ChatHomePage);
