@@ -1,9 +1,9 @@
 import React from 'react';
+import {useRouter} from "next/router";
 import {useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-import {useRouter} from "next/router";
-import {setCookie} from "@/utils/cookie-management";
+import {authProvider} from "@/provider/auth-provider";
 
 type FormData = {
     name: string;
@@ -24,55 +24,61 @@ const validationSchema = Yup.object().shape({
 
 function Form() {
     const router = useRouter();
-
     const {register, handleSubmit, reset, formState: {errors}} = useForm<FormData>({
         resolver: yupResolver(validationSchema)
     });
 
-    function onSubmit(userInfo: FormData) {
-        setCookie('userInfo', JSON.stringify(userInfo));
-        router.push("/chat").then(r => console.log(r));
-        reset();
-    }
+    const onSubmit = async (userInfo) => {
+        try {
+            const {authenticate} = await authProvider.signIn(userInfo);
+
+            authenticate && await router.push("/chat") && reset();
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className='login_form'>
+        <>
+            <h1>Chat-App</h1>
+            <form onSubmit={handleSubmit(onSubmit)} className='login_form'>
 
-            <label htmlFor="name">Name:</label>
-            <input
-                type="text"
-                id="name"
-                name="name"
-                {...register('name')}
-            />
-            {errors.name && (
-                <span className='error_message'>{errors.name.message}</span>
-            )}
+                <label htmlFor="name">Name:</label>
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    {...register('name')}
+                />
+                {errors.name && (
+                    <span className='error_message'>{errors.name.message}</span>
+                )}
 
-            <label htmlFor="email">Email:</label>
-            <input
-                type="email"
-                id="email"
-                name="email"
-                {...register('email')}
-            />
-            {errors.email && (
-                <span className='error_message'>{errors.email.message}</span>
-            )}
+                <label htmlFor="email">Email:</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    {...register('email')}
+                />
+                {errors.email && (
+                    <span className='error_message'>{errors.email.message}</span>
+                )}
 
-            <label htmlFor="password">Password:</label>
-            <input
-                type="password"
-                id="password"
-                name="password"
-                {...register('password')}
-            />
-            {errors.password && (
-                <span className='error_message'>{errors.password.message}</span>
-            )}
+                <label htmlFor="password">Password:</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    {...register('password')}
+                />
+                {errors.password && (
+                    <span className='error_message'>{errors.password.message}</span>
+                )}
 
-            <button type="submit">Submit</button>
-        </form>
+                <button type="submit">Submit</button>
+            </form>
+        </>
     );
 }
 

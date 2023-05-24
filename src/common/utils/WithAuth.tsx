@@ -20,9 +20,7 @@ export default function withAuth(WrappedComponent) {
         }, []);
 
         // Additional check to prevent rendering the protected page if not authenticated
-        if (!isAuthenticated) {
-            return null; // we can also return a loading component, or redirect to a different page
-        }
+        if (!isAuthenticated) return null; // we can also return a loading utils, or redirect to a different page
 
         return <WrappedComponent {...props} />;
     };
