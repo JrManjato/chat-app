@@ -1,11 +1,34 @@
+.container-flex-row {
+    display: flex;
+    flex-direction: row;
+}
 .error_message {
     color: red;
     font-size: .8rem;
 }
+
 .login_form {
     display: flex;
     flex-direction: column;
     width: 30%;
     margin: auto;
     justify-content: center;
+}
+
+.chat-container {
+    border: 1px solid black;
+}
+
+.channel-container, .channel-info-container {
+    width: 20%;
+    border: 1px solid black;
+}
+
+.message-container {
+    width: 60%;
+    border: 1px solid red;
+}
+
+.channel-info-container {
+
 }
