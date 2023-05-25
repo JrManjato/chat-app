@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import {getCookie} from "@/utils/cookie-management";
 
+// A HOC to protect a route
 export default function withAuth(WrappedComponent) {
     return function WithAuthComponent(props) {
         const router = useRouter();

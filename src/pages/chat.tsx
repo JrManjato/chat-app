@@ -1,18 +1,24 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {Button, Modal} from 'antd';
 import withAuth from "@/common/utils/WithAuth";
 import {removeCookie} from "@/utils/cookie-management";
+import {IRestUser} from "@/common/types";
+import {Channel} from "@/common/component/Channel";
 
-function ChatHomePage() {
+type FormData = {
+    name: string;
+    type: 'public' | 'private';
+    members: IRestUser[];
+};
+
+const ChatHomePage = () => {
     const clearStorage = () => {
         removeCookie('userInfo');
     }
     return (
         <>
             <div className='chat-container container-flex-row'>
-                <div className='channel-container'>
-                    <h1>Channel list</h1>
-
-                </div>
+               <Channel />
                 <div className='message-container'>
                     <h1>We have to place the selectedChannel's name here</h1>
                 </div>
