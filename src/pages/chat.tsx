@@ -38,4 +38,4 @@ const ChatHomePage = () => {
     );
 }
 
-export default withAuth(ChatHomePage);
+export default ChatHomePage;

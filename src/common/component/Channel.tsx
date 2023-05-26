@@ -1,42 +1,60 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Button, Modal} from "antd";
-import {IRestUser} from "@/common/types";
+import {ICreateChannel, IRestUser} from "@/common/types";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import * as Yup from "yup";
+import Select from "react-select";
+import makeAnimated from 'react-select/animated';
+import {userProvider} from "@/provider/user-provider";
+import {channelProvider} from "@/provider/channel-provider";
 
-type FormData = {
-    name: string;
-    type: 'public' | 'private';
-    members: IRestUser[];
+type Option = {
+    value: number;
+    label: string;
 };
 
 const validationSchema = Yup.object().shape({
-    name: Yup.string()
-        .required('Name is a required field'),
-    type: Yup.string()
-        .required('Type is a required field'),
-    members: Yup.array()
-        .required('members is a required field'),
+    name: Yup.string().required(),
+    type: Yup.string().oneOf(['public', 'private']).required(),
+    members: Yup.array().of(Yup.number()).required()
 });
 
 export const Channel = () => {
+    const animatedComponents = makeAnimated();
+    const [members, setMembers] = useState<IRestUser[]>();
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const {register, handleSubmit, reset, formState: {errors}} = useForm<FormData>({
+
+    const {register, handleSubmit, reset, formState: {errors}, setValue} = useForm<ICreateChannel>({
         resolver: yupResolver(validationSchema)
     });
 
-    const onSubmit = (userInfo) => {
-        console.log(userInfo);
+    useEffect(() => {
+        userProvider.getUsers()
+            .then((res) => {
+                setMembers(res.data);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }, [])
+
+    const formattedOptions = members?.map((user: IRestUser) => ({
+        value: user.id,
+        label: user.name
+    }));
+
+    const onSubmit = async (channelInfo) => {
+        await channelProvider.createChannel(channelInfo);
+        setIsModalOpen(false);
     }
 
-    return(
+    return (
         <div className='channel-container'>
             <h1>Channel list</h1>
             <Modal
                 title="Basic Modal"
                 open={isModalOpen}
-                onOk={() => setIsModalOpen(false)}
                 onCancel={() => setIsModalOpen(false)}
             >
                 <form onSubmit={handleSubmit(onSubmit)} className='login_form'>
@@ -53,23 +71,25 @@ export const Channel = () => {
                     )}
 
                     <label htmlFor="email">Type:</label>
-                    <input
-                        type="email"
-                        id="type"
-                        name="type"
-                        {...register('type')}
-                    />
+                    <select {...register('type')}>
+                        <option value="public">Public</option>
+                        <option value="private">Privé</option>
+                    </select>
                     {errors.type && (
-                        <span className='error_message'>{errors.email.message}</span>
+                        <span className='error_message'>{errors.type.message}</span>
                     )}
 
                     <label htmlFor="password">Members:</label>
-                    <input
-                        type="password"
-                        id="members"
-                        name="members"
-                        {...register('members')}
-                    />
+                    <Select
+                        onChange={(event) => {
+                            const arrayOfIDs: number[] = [];
+                            event.map((option: Option) => arrayOfIDs.push(option.value));
+                            setValue('members', arrayOfIDs);
+                        }}
+                        closeMenuOnSelect={true}
+                        components={animatedComponents}
+                        isMulti
+                        options={formattedOptions}/>
                     {errors.members && (
                         <span className='error_message'>{errors.members.message}</span>
                     )}
