@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Button, Modal} from "antd";
-import {ICreateChannel, IRestUser} from "@/common/types";
+import {IChannel, ICreateChannel, IRestUser} from "@/common/types";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import * as Yup from "yup";
@@ -8,6 +8,7 @@ import Select from "react-select";
 import makeAnimated from 'react-select/animated';
 import {userProvider} from "@/provider/user-provider";
 import {channelProvider} from "@/provider/channel-provider";
+import {ChannelItem} from "@/common/component/ChannelItem";
 
 type Option = {
     value: number;
@@ -23,6 +24,7 @@ const validationSchema = Yup.object().shape({
 export const Channel = () => {
     const animatedComponents = makeAnimated();
     const [members, setMembers] = useState<IRestUser[]>();
+    const [channelList, setChannelList] = useState<IChannel[]>();
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const {register, handleSubmit, reset, formState: {errors}, setValue} = useForm<ICreateChannel>({
@@ -31,12 +33,18 @@ export const Channel = () => {
 
     useEffect(() => {
         userProvider.getUsers()
-            .then((res) => {
-                setMembers(res.data);
+            .then((users) => {
+                setMembers(users.data);
             })
             .catch((error) => {
                 console.error(error);
             });
+        channelProvider.getChannels()
+            .then((channels) => {
+                setChannelList(channels.data);
+            }).catch((error) => {
+            console.error(error);
+        });
     }, [])
 
     const formattedOptions = members?.map((user: IRestUser) => ({
@@ -49,6 +57,7 @@ export const Channel = () => {
         setIsModalOpen(false);
     }
 
+    console.log(channelList);
     return (
         <div className='channel-container'>
             <h1>Channel list</h1>
@@ -103,6 +112,12 @@ export const Channel = () => {
             >
                 Add channel
             </Button>
+            <div className="channel-list">
+                Channel list
+                {channelList?.map((channel:IChannel) => (
+                    <ChannelItem id={channel.id} channel={channel} />
+                ))}
+            </div>
         </div>
     )
 }
