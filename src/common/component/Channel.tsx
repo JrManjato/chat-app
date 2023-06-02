@@ -27,7 +27,7 @@ export const Channel = () => {
     const [channelList, setChannelList] = useState<IChannel[]>();
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const {register, handleSubmit, reset, formState: {errors}, setValue} = useForm<ICreateChannel>({
+    const {register, handleSubmit, formState: {errors}, setValue} = useForm<ICreateChannel>({
         resolver: yupResolver(validationSchema)
     });
 
