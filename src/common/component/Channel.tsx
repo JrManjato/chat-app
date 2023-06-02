@@ -21,7 +21,7 @@ const validationSchema = Yup.object().shape({
     members: Yup.array().of(Yup.number()).required()
 });
 
-export const Channel = () => {
+export const Channel = ({updateCurrentChannel}) => {
     const animatedComponents = makeAnimated();
     const [members, setMembers] = useState<IRestUser[]>();
     const [channelList, setChannelList] = useState<IChannel[]>();
@@ -113,9 +113,12 @@ export const Channel = () => {
                 Add channel
             </Button>
             <div className="channel-list">
-                Channel list
                 {channelList?.map((channel:IChannel) => (
-                    <ChannelItem id={channel.id} channel={channel} />
+                    <ChannelItem
+                        id={channel.id}
+                        channel={channel}
+                        updateCurrentChannel={updateCurrentChannel}
+                    />
                 ))}
             </div>
         </div>

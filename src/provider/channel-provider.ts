@@ -20,4 +20,14 @@ export const channelProvider = {
             throw new Error('Failed to fetch channels. Please try again later.');
         }
     },
+    getChannelById: async (id: number) => {
+        try {
+            const response = await authenticatedRequest()?.get(`/channel/${id}`);
+            const currentChannel: IChannel = response.data.channel;
+            return {data: currentChannel};
+        } catch (error) {
+            console.error('An error occurred while fetching channel:', error);
+            throw new Error('Failed to fetch channel. Please try again later.');
+        }
+    },
 };
