@@ -5,9 +5,9 @@ export const channelProvider = {
     createChannel: async (newChannel: ICreateChannel) => {
         try {
             const createdChannel: IChannel = (await authenticatedRequest()?.post('/channel', newChannel)).data.channel;
-            return { data: createdChannel, check: true };
+            return {data: createdChannel};
         } catch (error) {
-            return { data: null as any, check: false };
+            return {data: null as any};
         }
     },
     getChannels: async () => {
@@ -20,9 +20,9 @@ export const channelProvider = {
             throw new Error('Failed to fetch channels. Please try again later.');
         }
     },
-    getChannelById: async (id: number) => {
+    getChannelById: async (channelID: number) => {
         try {
-            const response = await authenticatedRequest()?.get(`/channel/${id}`);
+            const response = await authenticatedRequest()?.get(`/channel/${channelID}`);
             const currentChannel: IChannel = response.data.channel;
             return {data: currentChannel};
         } catch (error) {
@@ -30,4 +30,12 @@ export const channelProvider = {
             throw new Error('Failed to fetch channel. Please try again later.');
         }
     },
+    addMember: async (channelID: string, newMember: number[]) => {
+        try {
+            const nuwMemberID: number[] = (await authenticatedRequest()?.post('/channels/' + channelID + '/members', newMember)).data.userAdded;
+            return {data: nuwMemberID};
+        } catch (error) {
+            return {data: null as any};
+        }
+    }
 };

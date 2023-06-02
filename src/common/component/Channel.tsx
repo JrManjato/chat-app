@@ -1,19 +1,14 @@
 import React, {useEffect, useState} from "react";
 import {Button, Modal} from "antd";
-import {IChannel, ICreateChannel, IRestUser} from "@/common/types";
+import {IChannel, ICreateChannel, IRestUser, Option} from "@/common/types";
 import {useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import Select from "react-select";
 import makeAnimated from 'react-select/animated';
-import {userProvider} from "@/provider/user-provider";
 import {channelProvider} from "@/provider/channel-provider";
 import {ChannelItem} from "@/common/component/ChannelItem";
 
-type Option = {
-    value: number;
-    label: string;
-};
 
 const validationSchema = Yup.object().shape({
     name: Yup.string().required(),
@@ -21,9 +16,8 @@ const validationSchema = Yup.object().shape({
     members: Yup.array().of(Yup.number()).required()
 });
 
-export const Channel = ({updateCurrentChannel}) => {
+export const Channel = ({updateCurrentChannel, members}) => {
     const animatedComponents = makeAnimated();
-    const [members, setMembers] = useState<IRestUser[]>();
     const [channelList, setChannelList] = useState<IChannel[]>();
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -32,13 +26,6 @@ export const Channel = ({updateCurrentChannel}) => {
     });
 
     useEffect(() => {
-        userProvider.getUsers()
-            .then((users) => {
-                setMembers(users.data);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
         channelProvider.getChannels()
             .then((channels) => {
                 setChannelList(channels.data);
@@ -57,7 +44,6 @@ export const Channel = ({updateCurrentChannel}) => {
         setIsModalOpen(false);
     }
 
-    console.log(channelList);
     return (
         <div className='channel-container'>
             <h1>Channel list</h1>
