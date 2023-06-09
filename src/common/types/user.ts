@@ -7,6 +7,14 @@ export interface ICreateUser {
     bio?: string;
 }
 
+export interface IUpdateUser {
+    name: string;
+    oldPassword: string;
+    password: string;
+    confirmPassword: string;
+    bio?: string;
+}
+
 export interface ILoginUser {
     email: string;
     password: string;

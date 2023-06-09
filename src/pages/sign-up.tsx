@@ -18,6 +18,7 @@ const validationSchema = Yup.object().shape({
     confirmPassword: Yup.string()
         .oneOf([Yup.ref('password'), null], 'Passwords must match')
         .required('Confirm Password is a required field'),
+    bio: Yup.string()
 });
 
 function SignUpForm() {
@@ -86,8 +87,7 @@ function SignUpForm() {
                 )}
 
                 <label htmlFor="bio">Bio (optional):</label>
-                <input
-                    type="text"
+                <textarea
                     id="bio"
                     name="bio"
                     {...register('bio')}

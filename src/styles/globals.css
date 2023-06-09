@@ -35,3 +35,10 @@
 .hide {
     display: none;
 }
+
+.profile-container {
+    display: flex;
+}
+.current-user-information, .edit-current-user {
+    width: 50%;
+}

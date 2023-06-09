@@ -51,8 +51,8 @@ const CreateChannelPage = () => {
                 <label htmlFor="name">Name:</label>
                 <input
                     type="text"
-                    id="name"
-                    name="name"
+                    id="channelName"
+                    name="channelName"
                     {...register('name')}
                 />
                 {errors.name && (
@@ -60,9 +60,11 @@ const CreateChannelPage = () => {
                 )}
 
                 <label htmlFor="email">Type:</label>
-                <select {...register('type')}>
+                <select
+                    name="type"
+                    {...register('type')}>
                     <option value="public">Public</option>
-                    <option value="private">Privé</option>
+                    <option value="private">Private</option>
                 </select>
                 {errors.type && (
                     <span className='error_message'>{errors.type.message}</span>
@@ -83,7 +85,10 @@ const CreateChannelPage = () => {
                     <span className='error_message'>{errors.members.message}</span>
                 )}
 
-                <button type="submit">Submit</button>
+                <button
+                    className="createChannelButton"
+                    type="submit"
+                >Create Channel</button>
             </form>
             <Button
                 type="primary"

@@ -61,7 +61,9 @@ const EditChannelPage = () => {
                     <span className='error_message'>{errors.members.message}</span>
                 )}
 
-                <button type="submit">Submit</button>
+                <button
+                    className="editChannelButton"
+                    type="submit">Edit Channel</button>
             </form>
         </div>
     );
