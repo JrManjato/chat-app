@@ -58,7 +58,10 @@ function LoginForm() {
                     <span className="error_message">{errors.password.message}</span>
                 )}
 
-                <button type="submit">Submit</button>
+                <button
+                    type="submit"
+                    className="loginButton"
+                >Login</button>
             </form>
             <button
                 type="button"
