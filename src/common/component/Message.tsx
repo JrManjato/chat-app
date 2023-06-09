@@ -8,15 +8,16 @@ import Select from "react-select";
 import makeAnimated from 'react-select/animated';
 import {userProvider} from "@/provider/user-provider";
 import {channelProvider} from "@/provider/channel-provider";
-import {ChannelItem} from "@/common/component/ChannelItem";
+import {DiscussionItem} from "@/common/component/ChannelItem";
 import Tab from "@/common/component/Tab";
 
 
 export const Message = (props) => {
-    const {currentChannel} = props;
+    const {currentDiscussion} = props;
     return (
         <div className='message-container'>
-            <h1>{currentChannel?.name}</h1>
+            <h1>{currentDiscussion?.name}</h1>
+            
         </div>
     )
 }

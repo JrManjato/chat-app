@@ -1,23 +1,26 @@
 import React from "react";
-import {channelProvider} from "@/provider/channel-provider";
-import {IChannel} from "@/common/types";
+import {router} from "next/client";
 
 
 export const ChannelItem = (props) => {
-    const {id, channel, updateCurrentChannel} = props;
+    const {channel, _updateCurrentDiscussion} = props;
     const {name, _type} = channel;
 
-    const fetchCurrentChannel = async () => {
-        const currentChannel: IChannel = (await channelProvider.getChannelById(id)).data;
+    const editChannelByID = async () => {
+      /*  const currentChannel: IChannel = (await channelProvider.getChannelById(channel.id)).data;
 
-        updateCurrentChannel(currentChannel);
+        updateCurrentDiscussion(currentChannel);
+
+       */
+
+        await router.push(`/channel/edit/${channel.id}`);
     }
 
     return (
         <div
-            key={id}
+            key={channel.id}
             className="channel-item"
-            onClick={fetchCurrentChannel}
+            onClick={editChannelByID}
         >
             <h2>{name}</h2>
         </div>

@@ -10,7 +10,7 @@ const ChatHomePage = () => {
     const clearStorage = () => {
         removeCookie('userInfo');
     }
-    const [currentChannel, setCurrentChannel] = useState<IChannel>();
+    const [currentDiscussion, setCurrentDiscussion] = useState<IChannel | IRestUser>();
     const [members, setMembers] = useState<IRestUser[]>();
 
     useEffect(() => {
@@ -25,9 +25,9 @@ const ChatHomePage = () => {
     return (
         <>
             <div className='chat-container container-flex-row'>
-                <Channel updateCurrentChannel={setCurrentChannel} members={members}/>
-                <Message currentChannel={currentChannel}/>
-                <ChannelInfo currentChannel={currentChannel}  members={members}/>
+                <Channel updateCurrentDiscussion={setCurrentDiscussion} members={members}/>
+                <Message currentDiscussion={currentDiscussion}/>
+                <ChannelInfo currentDiscussion={currentDiscussion} members={members}/>
             </div>
             <button
                 type='button'

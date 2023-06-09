@@ -30,9 +30,9 @@ export const channelProvider = {
             throw new Error('Failed to fetch channel. Please try again later.');
         }
     },
-    addMember: async (channelID: string, newMember: number[]) => {
+    addMembers: async (channelID: string, members: number[]) => {
         try {
-            const nuwMemberID: number[] = (await authenticatedRequest()?.post('/channels/' + channelID + '/members', newMember)).data.userAdded;
+            const nuwMemberID: number[] = (await authenticatedRequest()?.post('/channels/' + channelID + '/members', {members})).data.userAdded;
             return {data: nuwMemberID};
         } catch (error) {
             return {data: null as any};

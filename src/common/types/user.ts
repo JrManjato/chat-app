@@ -13,8 +13,9 @@ export interface ILoginUser {
 
 export interface IRestUser {
     id: number;
-    email: string;
     name: string;
+    email: string;
+    bio: string;
 }
 
 export interface IUser {
