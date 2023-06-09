@@ -15,6 +15,9 @@ const validationSchema = Yup.object().shape({
     password: Yup.string()
         .min(8, 'Password must be at least 8 characters')
         .required('Password is a required field'),
+    confirmPassword: Yup.string()
+        .oneOf([Yup.ref('password'), null], 'Passwords must match')
+        .required('Confirm Password is a required field'),
 });
 
 function SignUpForm() {
@@ -71,6 +74,17 @@ function SignUpForm() {
                     <span className='error_message'>{errors.password.message}</span>
                 )}
 
+                <label htmlFor="confirmPassword">Confirm Password:</label>
+                <input
+                    type="password"
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    {...register('confirmPassword')}
+                />
+                {errors.confirmPassword && (
+                    <span className='error_message'>{errors.confirmPassword.message}</span>
+                )}
+
                 <label htmlFor="bio">Bio (optional):</label>
                 <input
                     type="text"
@@ -79,7 +93,10 @@ function SignUpForm() {
                     {...register('bio')}
                 />
 
-                <button type="submit">Submit</button>
+                <button
+                    type="submit"
+                    className="registerButton"
+                >Register</button>
             </form>
             <button
                 type="button"

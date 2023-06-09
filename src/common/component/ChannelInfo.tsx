@@ -13,21 +13,6 @@ export const ChannelInfo = (props) => {
 
     const animatedComponents = makeAnimated();
 
-    interface IAddMembers {
-        members: number[];
-    }
-
-    const {handleSubmit, formState: {errors}, setValue} = useForm<IAddMembers>();
-
-    const formattedOptions = members?.map((user: IRestUser) => ({
-        value: user.id,
-        label: user.name
-    }));
-
-    const onSubmit = async (channelInfo: IAddMembers) => {
-        await channelProvider.addMembers(currentDiscussion.id.toString(), channelInfo.members);
-        setIsModalOpen(false);
-    }
 
     return (
         <div className='channel-info-container'>
@@ -40,31 +25,6 @@ export const ChannelInfo = (props) => {
             >
                 Add Members
             </button>
-            <Modal
-                title="Basic Modal"
-                open={isModalOpen}
-                onCancel={() => setIsModalOpen(false)}
-            >
-                <form onSubmit={handleSubmit(onSubmit)} className='login_form'>
-
-                    <label htmlFor="password">Members:</label>
-                    <Select
-                        onChange={(event) => {
-                            const arrayOfIDs: number[] = [];
-                            event.map((option: Option) => arrayOfIDs.push(option.value));
-                            setValue('members', arrayOfIDs);
-                        }}
-                        closeMenuOnSelect={true}
-                        components={animatedComponents}
-                        isMulti
-                        options={formattedOptions}/>
-                    {errors.members && (
-                        <span className='error_message'>{errors.members.message}</span>
-                    )}
-
-                    <button type="submit">Submit</button>
-                </form>
-            </Modal>
         </div>
     )
 }

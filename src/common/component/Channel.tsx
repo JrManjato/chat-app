@@ -11,7 +11,6 @@ import {router} from "next/client";
 export const Channel = ({updateCurrentDiscussion, members}) => {
     const [channelList, setChannelList] = useState<IChannel[]>();
 
-
     useEffect(() => {
         channelProvider.getChannels()
             .then((channels) => {
