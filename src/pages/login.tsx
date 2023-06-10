@@ -25,7 +25,7 @@ function LoginForm() {
         try {
             const {authenticate} = await authProvider.signIn(userInfo);
 
-            authenticate && await router.push("/chat") && reset();
+            authenticate && await router.push("/profile") && reset();
         } catch (error) {
             console.error(error);
         }
@@ -34,7 +34,7 @@ function LoginForm() {
     return (
         <>
             <h1>Chat-App</h1>
-            <form onSubmit={handleSubmit(onSubmit)} className="login_form">
+            <form onSubmit={handleSubmit(onSubmit)} className="loginForm" name="loginForm">
 
                 <label htmlFor="email">Email:</label>
                 <input

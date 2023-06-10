@@ -22,7 +22,6 @@ const validationSchema = Yup.object().shape({
 
 function ProfilePage() {
     const [connectedUser, setConnectedUser] = useState<IUser | undefined>();
-    const router = useRouter();
 
     const {register, handleSubmit, reset, formState: {errors}} = useForm<IUpdateUser>({
         resolver: yupResolver(validationSchema)
@@ -58,7 +57,7 @@ function ProfilePage() {
                 <p>Bio: {bio}</p>
             </div>
             <div className="edit-current-user">
-                <form onSubmit={handleSubmit(onSubmit)} className='login_form'>
+                <form onSubmit={handleSubmit(onSubmit)} className='editProfileForm' name="editProfileForm">
 
                     <label htmlFor="name">Name:</label>
                     <input

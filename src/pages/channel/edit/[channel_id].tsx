@@ -44,7 +44,7 @@ const EditChannelPage = () => {
         <div>
             <h1>Add Members in Channel {channel_id}</h1>
             {/* Your JSX/HTML content goes here */}
-            <form onSubmit={handleSubmit(onSubmit)} className='login_form'>
+            <form onSubmit={handleSubmit(onSubmit)} className='editChannelForm' name="editChannelForm">
 
                 <label htmlFor="password">Members:</label>
                 <Select

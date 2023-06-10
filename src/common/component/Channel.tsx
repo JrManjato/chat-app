@@ -43,6 +43,12 @@ export const Channel = ({updateCurrentDiscussion, members}) => {
                     />
                 ))}
             </div>
+            <Button
+                type="primary"
+                onClick={async () => router.push('/message/1')} //redirect at create channel
+            >
+               elon mush
+            </Button>
         </div>
     )
 }

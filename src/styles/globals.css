@@ -42,3 +42,7 @@
 .current-user-information, .edit-current-user {
     width: 50%;
 }
+.direct-message-container {
+    display: flex;
+    flex-direction: column;
+}

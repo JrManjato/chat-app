@@ -15,9 +15,6 @@ export default function withAuth(WrappedComponent) {
             if (!isAuthenticated) {
                 router.push('/login'); // Redirect to login page
             }
-            else{
-                router.push("/chat");
-            }
         }, []);
 
         // Additional check to prevent rendering the protected page if not authenticated

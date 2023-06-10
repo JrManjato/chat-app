@@ -13,6 +13,6 @@ export interface IMessage {
 
 export interface ICreateMessage {
     content: string;
-    channelId: string;
-    recipientId: string | null;
+    channelId?: string;
+    recipientId?: string | null;
 }

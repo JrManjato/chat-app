@@ -31,7 +31,7 @@ function SignUpForm() {
         try {
             const {authenticate} = await authProvider.signUp(userInfo);
 
-            authenticate && await router.push("/chat") && reset();
+            authenticate && await router.push("/profile") && reset();
         } catch (error) {
             console.error(error);
         }
