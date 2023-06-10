@@ -40,7 +40,7 @@ function SignUpForm() {
     return (
         <>
             <h1>Chat-App</h1>
-            <form onSubmit={handleSubmit(onSubmit)} className='login_form'>
+            <form onSubmit={handleSubmit(onSubmit)} className='login_form' name="registrationForm">
 
                 <label htmlFor="name">Name:</label>
                 <input

@@ -37,7 +37,7 @@ const EditChannelPage = () => {
     }
 
     const onSubmit = async (channelInfo: IAddMembers) => {
-        await channelProvider.addMembers(channel_id.toString(), channelInfo.members);
+        channelProvider.addMembers(channel_id.toString(), channelInfo.members).then((newChannel) => router.push(`/channel/${channel_id}`)).catch((err) => console.log(err));;
     }
 
     return (

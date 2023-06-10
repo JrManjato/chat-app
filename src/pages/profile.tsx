@@ -57,7 +57,7 @@ function ProfilePage() {
                 <p>Bio: {bio}</p>
             </div>
             <div className="edit-current-user">
-                <form onSubmit={handleSubmit(onSubmit)} className='editProfileForm' name="editProfileForm">
+                <form onSubmit={handleSubmit(onSubmit)} className='login_form editProfileForm' name="editProfileForm">
 
                     <label htmlFor="name">Name:</label>
                     <input

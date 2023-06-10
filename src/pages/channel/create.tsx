@@ -47,7 +47,7 @@ const CreateChannelPage = () => {
 
     return (
         <>
-            <form onSubmit={handleSubmit(onSubmit)} className='login_form'>
+            <form onSubmit={handleSubmit(onSubmit)} className='login_form' name="createChannelForm">
                 <label htmlFor="name">Name:</label>
                 <input
                     type="text"
