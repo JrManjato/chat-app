@@ -41,8 +41,8 @@ const CreateChannelPage = () => {
         label: user.name
     }));
 
-    const onSubmit = async (channelInfo) => {
-        await channelProvider.createChannel(channelInfo);
+    const onSubmit =  (channelInfo) => {
+         channelProvider.createChannel(channelInfo).then((newChannel) => router.push(`/channel/${newChannel.data.id}`)).catch((err) => console.log(err));
     }
 
     return (
